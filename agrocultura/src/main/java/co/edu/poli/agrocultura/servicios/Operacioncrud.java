@@ -10,7 +10,7 @@ import co.edu.poli.agrocultura.modelo.Articulo;
  *
  * @author Equipo Agrocultura
  * @version 1.0
- * @since 2024-01-01
+ * @since 2026-05-22
  */
 public interface Operacioncrud {
 
@@ -38,7 +38,7 @@ public interface Operacioncrud {
     Articulo[] leertodo();
 
     /**
-     * Reemplaza el articulo en la posicion indicada por uno nuevo.
+     * Reemplaza el articulo en la posicion indicada por uno nuevo
      *
      * @param indice   Posicion del articulo a modificar.
      * @param articulo Nuevo objeto {@link Articulo} que reemplazara al existente.

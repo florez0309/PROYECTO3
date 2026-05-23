@@ -9,7 +9,7 @@ import co.edu.poli.agrocultura.modelo.Articulo;
  *
  * @author Equipo Agrocultura
  * @version 1.0
- * @since 2024-01-01
+ * @since 2026-05-22
  */
 public class Implementacionoperacioncrud implements Operacioncrud, Operacionarchivo {
 
