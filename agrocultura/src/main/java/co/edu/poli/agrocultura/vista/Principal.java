@@ -4,11 +4,33 @@ import co.edu.poli.agrocultura.modelo.*;
 import co.edu.poli.agrocultura.servicios.Implementacionoperacioncrud;
 import java.util.Scanner;
 
+/**
+ * Clase principal del sistema de gestion de agrocultura.
+ * Contiene el metodo main y gestiona toda la interaccion con el usuario
+ * a traves de menus en consola.
+ * Implementa validacion de entradas y manejo de errores con try-catch
+ * para evitar que el programa se cierre ante entradas incorrectas.
+ *
+ * @author Equipo Agrocultura
+ * @version 1.0
+ * @since 2024-01-01
+ */
 public class Principal {
 
+    /** Objeto Scanner para leer entradas del usuario por consola. */
     static Scanner sc = new Scanner(System.in);
+
+    /** Instancia del servicio que gestiona las operaciones CRUD y de archivo. */
     static Implementacionoperacioncrud servicio = new Implementacionoperacioncrud();
 
+    /**
+     * Punto de entrada del programa.
+     * Muestra el menu principal en un bucle continuo hasta que el usuario
+     * elija la opcion de salir. Captura cualquier error inesperado con try-catch
+     * para mantener el programa en ejecucion.
+     *
+     * @param args Argumentos de linea de comandos (no se utilizan).
+     */
     public static void main(String[] args) {
         boolean salir = false;
         while (!salir) {
@@ -26,12 +48,12 @@ public class Principal {
                 String entrada = sc.nextLine().trim();
 
                 switch (entrada) {
-                    case "1": menuCrear();    break;
-                    case "2": menuLeer();     break;
-                    case "3": mostrarTodo();  break;
-                    case "4": menuModificar();break;
-                    case "5": menuEliminar(); break;
-                    case "6": serializar();   break;
+                    case "1": menuCrear();     break;
+                    case "2": menuLeer();      break;
+                    case "3": mostrarTodo();   break;
+                    case "4": menuModificar(); break;
+                    case "5": menuEliminar();  break;
+                    case "6": serializar();    break;
                     case "0": salir = true; System.out.println("Hasta luego."); break;
                     default:
                         System.out.println(">>> Opcion incorrecta. Por favor ingrese una opcion valida (0-6).");
@@ -43,6 +65,12 @@ public class Principal {
     }
 
     // ─── CREAR ────────────────────────────────────────────────────────────────
+
+    /**
+     * Muestra el submenu para seleccionar el tipo de articulo a crear.
+     * Permanece en el submenu hasta que el usuario elija un tipo valido o regrese.
+     * Si la opcion ingresada no es valida, muestra un mensaje y vuelve al mismo submenu.
+     */
     static void menuCrear() {
         boolean volver = false;
         while (!volver) {
@@ -71,13 +99,18 @@ public class Principal {
         }
     }
 
+    /**
+     * Solicita los datos necesarios para crear una {@link Semilla} y la registra en el sistema.
+     * Si el usuario ingresa un dato numerico invalido, muestra un mensaje de error
+     * sin salir del programa.
+     */
     static void crearSemilla() {
         try {
-            System.out.print("Codigo: ");       int cod  = Integer.parseInt(sc.nextLine().trim());
-            System.out.print("Descripcion: ");  String desc = sc.nextLine().trim();
-            System.out.print("Stock: ");        double stock = Double.parseDouble(sc.nextLine().trim());
+            System.out.print("Codigo: ");                      int cod   = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Descripcion: ");                 String desc  = sc.nextLine().trim();
+            System.out.print("Stock: ");                       double stock = Double.parseDouble(sc.nextLine().trim());
             System.out.print("Fecha registro (yyyy-mm-dd): "); String fecha = sc.nextLine().trim();
-            System.out.print("Tipo de semilla: "); String tipo = sc.nextLine().trim();
+            System.out.print("Tipo de semilla: ");             String tipo  = sc.nextLine().trim();
             Semilla s = new Semilla(cod, desc, stock, fecha, tipo);
             System.out.println(servicio.crear(s));
         } catch (NumberFormatException e) {
@@ -85,15 +118,20 @@ public class Principal {
         }
     }
 
+    /**
+     * Solicita los datos necesarios para crear una {@link Composta} y la registra en el sistema.
+     * Si el usuario ingresa un dato numerico invalido, muestra un mensaje de error
+     * sin salir del programa.
+     */
     static void crearComposta() {
         try {
-            System.out.print("Codigo: ");       int cod  = Integer.parseInt(sc.nextLine().trim());
-            System.out.print("Descripcion: ");  String desc = sc.nextLine().trim();
-            System.out.print("Stock: ");        double stock = Double.parseDouble(sc.nextLine().trim());
-            System.out.print("Fecha registro (yyyy-mm-dd): "); String fecha = sc.nextLine().trim();
-            System.out.print("Fuente: ");       String fuente = sc.nextLine().trim();
-            System.out.print("Tiempo descomposicion (dias): "); int tiempo = Integer.parseInt(sc.nextLine().trim());
-            System.out.print("Tipo unidad: ");  String unidad = sc.nextLine().trim();
+            System.out.print("Codigo: ");                          int cod   = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Descripcion: ");                     String desc  = sc.nextLine().trim();
+            System.out.print("Stock: ");                           double stock = Double.parseDouble(sc.nextLine().trim());
+            System.out.print("Fecha registro (yyyy-mm-dd): ");     String fecha = sc.nextLine().trim();
+            System.out.print("Fuente: ");                          String fuente = sc.nextLine().trim();
+            System.out.print("Tiempo descomposicion (dias): ");    int tiempo = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Tipo unidad: ");                     String unidad = sc.nextLine().trim();
             Composta c = new Composta(cod, desc, stock, fecha, fuente, tiempo, unidad);
             System.out.println(servicio.crear(c));
         } catch (NumberFormatException e) {
@@ -101,14 +139,19 @@ public class Principal {
         }
     }
 
+    /**
+     * Solicita los datos necesarios para crear un {@link Nutriente} y lo registra en el sistema.
+     * Si el usuario ingresa un dato numerico invalido, muestra un mensaje de error
+     * sin salir del programa.
+     */
     static void crearNutriente() {
         try {
-            System.out.print("Codigo: ");       int cod  = Integer.parseInt(sc.nextLine().trim());
-            System.out.print("Descripcion: ");  String desc = sc.nextLine().trim();
-            System.out.print("Stock: ");        double stock = Double.parseDouble(sc.nextLine().trim());
+            System.out.print("Codigo: ");                      int cod   = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Descripcion: ");                 String desc  = sc.nextLine().trim();
+            System.out.print("Stock: ");                       double stock = Double.parseDouble(sc.nextLine().trim());
             System.out.print("Fecha registro (yyyy-mm-dd): "); String fecha = sc.nextLine().trim();
-            System.out.print("Composicion: ");  String comp = sc.nextLine().trim();
-            System.out.print("Tipo unidad: ");  String unidad = sc.nextLine().trim();
+            System.out.print("Composicion: ");                 String comp  = sc.nextLine().trim();
+            System.out.print("Tipo unidad: ");                 String unidad = sc.nextLine().trim();
             Nutriente n = new Nutriente(cod, desc, stock, fecha, comp, unidad);
             System.out.println(servicio.crear(n));
         } catch (NumberFormatException e) {
@@ -116,15 +159,20 @@ public class Principal {
         }
     }
 
+    /**
+     * Solicita los datos necesarios para crear un {@link Controlplaga} y lo registra en el sistema.
+     * Si el usuario ingresa un dato numerico invalido, muestra un mensaje de error
+     * sin salir del programa.
+     */
     static void crearControlPlaga() {
         try {
-            System.out.print("Codigo: ");        int cod  = Integer.parseInt(sc.nextLine().trim());
-            System.out.print("Descripcion: ");   String desc = sc.nextLine().trim();
-            System.out.print("Stock: ");         double stock = Double.parseDouble(sc.nextLine().trim());
-            System.out.print("Fecha registro (yyyy-mm-dd): "); String fecha = sc.nextLine().trim();
-            System.out.print("Plaga objetivo: "); String plaga = sc.nextLine().trim();
-            System.out.print("Nivel toxicidad: "); String tox  = sc.nextLine().trim();
-            System.out.print("Tipo unidad: ");    String unidad = sc.nextLine().trim();
+            System.out.print("Codigo: ");                       int cod   = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Descripcion: ");                  String desc  = sc.nextLine().trim();
+            System.out.print("Stock: ");                        double stock = Double.parseDouble(sc.nextLine().trim());
+            System.out.print("Fecha registro (yyyy-mm-dd): ");  String fecha = sc.nextLine().trim();
+            System.out.print("Plaga objetivo: ");               String plaga = sc.nextLine().trim();
+            System.out.print("Nivel toxicidad: ");              String tox   = sc.nextLine().trim();
+            System.out.print("Tipo unidad: ");                  String unidad = sc.nextLine().trim();
             Controlplaga cp = new Controlplaga(cod, desc, stock, fecha, plaga, tox, unidad);
             System.out.println(servicio.crear(cp));
         } catch (NumberFormatException e) {
@@ -132,7 +180,14 @@ public class Principal {
         }
     }
 
-    // ─── LEER ────────────────────────────────────────────────────────────────
+    // ─── LEER ─────────────────────────────────────────────────────────────────
+
+    /**
+     * Solicita al usuario un indice y muestra la informacion del articulo en esa posicion.
+     * Si el indice no es un numero o no se encuentra el articulo, muestra un mensaje
+     * y vuelve al mismo submenu sin cerrar el programa.
+     * El usuario puede escribir "salir" para regresar al menu principal.
+     */
     static void menuLeer() {
         boolean volver = false;
         while (!volver) {
@@ -154,7 +209,13 @@ public class Principal {
         }
     }
 
-    // ─── LEER TODO ───────────────────────────────────────────────────────────
+    // ─── LEER TODO ────────────────────────────────────────────────────────────
+
+    /**
+     * Muestra la informacion de todos los articulos registrados en el sistema.
+     * Si no hay articulos registrados, muestra un mensaje informativo.
+     * Captura cualquier error con try-catch sin cerrar el programa.
+     */
     static void mostrarTodo() {
         try {
             Articulo[] todos = servicio.leertodo();
@@ -171,7 +232,13 @@ public class Principal {
         }
     }
 
-    // ─── MODIFICAR ───────────────────────────────────────────────────────────
+    // ─── MODIFICAR ────────────────────────────────────────────────────────────
+
+    /**
+     * Solicita al usuario el indice del articulo a modificar y el nuevo tipo de articulo.
+     * Si alguna entrada es incorrecta, muestra un mensaje y vuelve al mismo submenu.
+     * El usuario puede escribir "salir" para regresar al menu principal.
+     */
     static void menuModificar() {
         boolean volver = false;
         while (!volver) {
@@ -206,13 +273,20 @@ public class Principal {
         }
     }
 
+    /**
+     * Solicita los datos del nuevo articulo segun el tipo indicado y ejecuta la modificacion.
+     * Es un metodo auxiliar de {@link #menuModificar()}.
+     *
+     * @param indice Posicion en el arreglo donde se realizara la modificacion.
+     * @param tipo   Tipo de articulo a crear: "semilla", "composta", "nutriente" o "controlplaga".
+     */
     static void crearYModificar(int indice, String tipo) {
         try {
+            System.out.print("Codigo: ");              int cod   = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Descripcion: ");         String desc  = sc.nextLine().trim();
+            System.out.print("Stock: ");               double stock = Double.parseDouble(sc.nextLine().trim());
+            System.out.print("Fecha (yyyy-mm-dd): ");  String fecha = sc.nextLine().trim();
             Articulo nuevo = null;
-            System.out.print("Codigo: ");      int cod   = Integer.parseInt(sc.nextLine().trim());
-            System.out.print("Descripcion: "); String desc = sc.nextLine().trim();
-            System.out.print("Stock: ");       double stock = Double.parseDouble(sc.nextLine().trim());
-            System.out.print("Fecha (yyyy-mm-dd): "); String fecha = sc.nextLine().trim();
 
             switch (tipo) {
                 case "semilla":
@@ -220,21 +294,21 @@ public class Principal {
                     nuevo = new Semilla(cod, desc, stock, fecha, ts);
                     break;
                 case "composta":
-                    System.out.print("Fuente: ");  String fu = sc.nextLine().trim();
-                    System.out.print("Tiempo descomposicion: "); int td = Integer.parseInt(sc.nextLine().trim());
-                    System.out.print("Tipo unidad: "); String tu = sc.nextLine().trim();
+                    System.out.print("Fuente: ");                     String fu = sc.nextLine().trim();
+                    System.out.print("Tiempo descomposicion (dias): "); int td = Integer.parseInt(sc.nextLine().trim());
+                    System.out.print("Tipo unidad: ");                String tu = sc.nextLine().trim();
                     nuevo = new Composta(cod, desc, stock, fecha, fu, td, tu);
                     break;
                 case "nutriente":
                     System.out.print("Composicion: "); String co = sc.nextLine().trim();
-                    System.out.print("Tipo unidad: ");  String un = sc.nextLine().trim();
+                    System.out.print("Tipo unidad: "); String un = sc.nextLine().trim();
                     nuevo = new Nutriente(cod, desc, stock, fecha, co, un);
                     break;
                 case "controlplaga":
-                    System.out.print("Plaga objetivo: ");  String pl = sc.nextLine().trim();
-                    System.out.print("Nivel toxicidad: "); String to = sc.nextLine().trim();
+                    System.out.print("Plaga objetivo: ");  String pl  = sc.nextLine().trim();
+                    System.out.print("Nivel toxicidad: "); String tox = sc.nextLine().trim();
                     System.out.print("Tipo unidad: ");     String tu2 = sc.nextLine().trim();
-                    nuevo = new Controlplaga(cod, desc, stock, fecha, pl, to, tu2);
+                    nuevo = new Controlplaga(cod, desc, stock, fecha, pl, tox, tu2);
                     break;
             }
             System.out.println(servicio.modificar(indice, nuevo));
@@ -243,7 +317,13 @@ public class Principal {
         }
     }
 
-    // ─── ELIMINAR ────────────────────────────────────────────────────────────
+    // ─── ELIMINAR ─────────────────────────────────────────────────────────────
+
+    /**
+     * Solicita al usuario el indice del articulo a eliminar y ejecuta la operacion.
+     * Si el indice no es un numero valido, muestra un mensaje y vuelve al mismo submenu.
+     * El usuario puede escribir "salir" para regresar al menu principal.
+     */
     static void menuEliminar() {
         boolean volver = false;
         while (!volver) {
@@ -263,7 +343,12 @@ public class Principal {
         }
     }
 
-    // ─── SERIALIZAR ──────────────────────────────────────────────────────────
+    // ─── SERIALIZAR ───────────────────────────────────────────────────────────
+
+    /**
+     * Llama al metodo de serializacion del servicio y muestra el resultado en consola.
+     * Captura cualquier error con try-catch sin cerrar el programa.
+     */
     static void serializar() {
         try {
             System.out.println("\n--- SERIALIZAR ---");
